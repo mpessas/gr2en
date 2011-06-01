@@ -63,7 +63,7 @@ def g2e(s):
     s = re.sub(u'Μ', r'M', s)
     s = re.sub(u'ν', r'n', s)
     s = re.sub(u'Ν', r'N', s)
-    s = re.sub(u'ξ', r'X', s)
+    s = re.sub(u'ξ', r'x', s)
     s = re.sub(u'Ξ', r'X', s)
     s = re.sub(u'ο', r'o', s)
     s = re.sub(u'Ο', r'O', s)
