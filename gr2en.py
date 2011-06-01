@@ -5,11 +5,10 @@
 
 import re
 import sys
-from codecs import open
 
 def g2e(s):
     # Δίφθογγοι αυ, ευ, ηυ
-    s = re.sub(u'([αεηΑΕΗ])[υύ](βγδζλμνραιυεοηωάίύέόήώϊϋΒΓΔΖΛΜΝΡΑΙΥΕΟΗΩΆΊΎΈΌΉΏΪΫ])', r'\1v\2', s)
+    s = re.sub(u'([αεηΑΕΗ])[υύ]([βγδζλμνραιυεοηωάίύέόήώϊϋΒΓΔΖΛΜΝΡΑΙΥΕΟΗΩΆΊΎΈΌΉΏΪΫ])', r'\1v\2', s)
     s = re.sub(u'([αεηΑΕΗ])[ΥΎ]([βγδζλμνραιυεοηωάίύέόήώϊϋΒΓΔΖΛΜΝΡΑΙΥΕΟΗΩΆΊΎΈΌΉΏΪΫ])', r'\1V\2', s)
     s = re.sub(u'([αεηΑΕΗ])[υύ]([θκξπστφχψΘΚΞΠΣΤΦΧΨ\b])', r'\1f\2', s)
     s = re.sub(u'([αεηΑΕΗ])[ΥΎ]([θκξπστφχψΘΚΞΠΣΤΦΧΨ\b])', r'\1F\2', s)
@@ -50,7 +49,7 @@ def g2e(s):
     s = re.sub(u'Δ', r'D', s)
     s = re.sub(u'ε', r'e', s)
     s = re.sub(u'Ε', r'E', s)
-    s = re.sub(u'ζ', r'Z', s)
+    s = re.sub(u'ζ', r'z', s)
     s = re.sub(u'Ζ', r'Z', s)
     s = re.sub(u'η', r'i', s)
     s = re.sub(u'Η', r'I', s)
@@ -64,7 +63,7 @@ def g2e(s):
     s = re.sub(u'Μ', r'M', s)
     s = re.sub(u'ν', r'n', s)
     s = re.sub(u'Ν', r'N', s)
-    s = re.sub(u'ξ', r'X', s)
+    s = re.sub(u'ξ', r'x', s)
     s = re.sub(u'Ξ', r'X', s)
     s = re.sub(u'ο', r'o', s)
     s = re.sub(u'Ο', r'O', s)
@@ -76,7 +75,7 @@ def g2e(s):
     s = re.sub(u'Σ', r'S', s)
     s = re.sub(u'τ', r't', s)
     s = re.sub(u'Τ', r'T', s)
-    s = re.sub(u'υ', r'Y', s)
+    s = re.sub(u'υ', r'y', s)
     s = re.sub(u'Υ', r'Y', s)
     s = re.sub(u'φ', r'f', s)
     s = re.sub(u'Φ', r'F', s)
@@ -106,13 +105,21 @@ def g2e(s):
     
     return s
     
+def get_decoded_input(line):
+	try:
+		line = line.decode("utf-8")
+	except UnicodeDecodeError:
+		line = line.decode("iso8859-7")
+	return line
 
 if __name__ == '__main__':
 
     for file in sys.argv[1:]:
         try:
-            f = open(file, encoding='utf-8')
+            f = open(file)
             for line in f:
-                print g2e(line)
+                decoded_line = get_decoded_input(line)
+                sys.stdout.write(g2e(decoded_line))
+                sys.stdout.flush()
         finally:
             f.close()
