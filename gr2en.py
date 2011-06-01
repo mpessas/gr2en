@@ -119,6 +119,7 @@ if __name__ == '__main__':
             f = open(file)
             for line in f:
                 decoded_line = get_decoded_input(line)
-                print g2e(decoded_line)
+                sys.stdout.write(g2e(decoded_line))
+                sys.stdout.flush()
         finally:
             f.close()
