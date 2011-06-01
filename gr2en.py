@@ -5,7 +5,6 @@
 
 import re
 import sys
-from codecs import open
 
 def g2e(s):
     # Δίφθογγοι αυ, ευ, ηυ
@@ -106,13 +105,20 @@ def g2e(s):
     
     return s
     
+def get_decoded_input(line):
+	try:
+		line = line.decode("utf-8")
+	except UnicodeDecodeError:
+		line = line.decode("iso8859-7")
+	return line
 
 if __name__ == '__main__':
 
     for file in sys.argv[1:]:
         try:
-            f = open(file, encoding='utf-8')
+            f = open(file)
             for line in f:
-                print g2e(line)
+                decoded_line = get_decoded_input(line)
+                print g2e(decoded_line)
         finally:
             f.close()
